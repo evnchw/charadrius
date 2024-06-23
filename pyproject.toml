@@ -21,8 +21,8 @@ packages = [
     { include = "charadrius", from = "src" },
 ]
 
-authors = ["Evan Chow <echow@alumni.princeton.edu",]
-maintainers = ["Evan Chow <echow@alumni.princeton.edu",]
+authors = ["Evan Chow <echow@alumni.princeton.edu>",]
+maintainers = ["Evan Chow <echow@alumni.princeton.edu>",]
 
 include = ["CHANGELOG.md", "LICENSE", "py.typed",]
 license = "MIT"
