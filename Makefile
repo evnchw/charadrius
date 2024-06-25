@@ -1,51 +1,52 @@
-# Inspired by: https://blog.mathieu-leplatre.info/tips-for-your-makefile-with-python.html
+# Makefile for managing a poetry repository and Jupyter kernel installation
 
-PYMODULE := charadrius
-TESTS := tests
-INSTALL_STAMP := .install.stamp
-POETRY := $(shell command -v poetry 2> /dev/null)
-MYPY := $(shell command -v mypy 2> /dev/null)
+# Define variables
+REPO_NAME := $(shell basename $$PWD)
+VENV_NAME := $(REPO_NAME)-venv
+KERNEL_NAME := $(REPO_NAME)-kernel
 
-.DEFAULT_GOAL := help
-
+# Default target
 .PHONY: all
-all: install lint test
+all: install
 
-.PHONY: help
-help:
-	@echo "Please use 'make <target>', where <target> is one of"
-	@echo ""
-	@echo "  install     install packages and prepare environment"
-	@echo "  lint        run the code linters"
-	@echo "  test        run all the tests"
-	@echo "  all         install, lint, and test the project"
-	@echo "  clean       remove all temporary files listed in .gitignore"
-	@echo ""
-	@echo "Check the Makefile to know exactly what each target is doing."
-	@echo "Most actions are configured in 'pyproject.toml'."
+# Create virtual environment
+$(VENV_NAME):
+	@echo "Creating virtual environment..."
+	poetry config virtualenvs.create true
+	poetry install
 
-install: $(INSTALL_STAMP)
-$(INSTALL_STAMP): pyproject.toml
-	@if [ -z $(POETRY) ]; then echo "Poetry could not be found. See https://python-poetry.org/docs/"; exit 2; fi
-	$(POETRY) run pip install --upgrade pip setuptools
-	$(POETRY) install --with dev,tests,linters
-	touch $(INSTALL_STAMP)
+# Install dependencies
+.PHONY: install
+install: $(VENV_NAME)
+	@echo "Installing dependencies..."
+	poetry install
 
-.PHONY: lint
-lint: $(INSTALL_STAMP)
-    # Configured in pyproject.toml
-    # Skips mypy if not installed
-    # 
-    # $(POETRY) run black --check $(TESTS) $(PYMODULE) --diff
-	@if [ -z $(MYPY) ]; then echo "Mypy not found, skipping..."; else echo "Running Mypy..."; $(POETRY) run mypy $(PYMODULE) $(TESTS); fi
-	@echo "Running Ruff..."; $(POETRY) run ruff . --fix
+# Create Jupyter kernel
+.PHONY: kernel
+kernel: $(VENV_NAME)
+	@echo "Creating Jupyter kernel..."
+	poetry run pip install ipykernel
+	poetry run python -m ipykernel install --user --name=$(REPO_NAME)
 
-.PHONY: test
-test: $(INSTALL_STAMP)
-    # Configured in pyproject.toml
-	$(POETRY) run pytest
-
+# Remove virtual environment
 .PHONY: clean
 clean:
-    # Delete all files in .gitignore
-	git clean -Xdf
+	@echo "Removing virtual environment..."
+	poetry env remove $(VENV_NAME)
+
+# Remove Jupyter kernel
+.PHONY: clean-kernel
+clean-kernel:
+	@echo "Removing Jupyter kernel..."
+	jupyter kernelspec uninstall $(KERNEL_NAME)
+
+# Help target to display available targets
+.PHONY: help
+help:
+	@echo "Available targets:"
+	@echo "  install      : Create virtual environment and install dependencies"
+	@echo "  kernel       : Create Jupyter kernel for the repository"
+	@echo "  clean        : Remove virtual environment"
+	@echo "  clean-kernel : Remove Jupyter kernel"
+	@echo "  help         : Show this help message"
+
