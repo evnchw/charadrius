@@ -51,7 +51,9 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0.0"
+python=">=3.10,<3.12"
+ipykernel = "^6.29.4"
+aspidoceleon = {git = "ssh://git@github.com/evnchw/aspidoceleon.git"}
 
 
 [tool.poetry.group.dev.dependencies]
