@@ -317,7 +317,7 @@ vectorbt = "^0.26.1"
 [package.source]
 type = "git"
 url = "ssh://git@github.com/evnchw/aspidoceleon.git"
-reference = "HEAD"
+reference = "v1.0"
 resolved_reference = "3d8e344890d056eadfd1d01369fbd69508507764"
 
 [[package]]
@@ -6793,4 +6793,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "71f3f37f9bc12ec92955900a682248e866b287df15278e2b0615202e6e41aaa8"
+content-hash = "425a3213f482b9674d2b2db82334c2c8a81dc127b8d9359d011727c3f9cc585b"
