@@ -318,7 +318,7 @@ vectorbt = "^0.26.1"
 type = "git"
 url = "ssh://git@github.com/evnchw/aspidoceleon.git"
 reference = "v1.0.1"
-resolved_reference = "4dbc28b97b0a94b7a667b4293221d28f11347a2b"
+resolved_reference = "27557fd9a6a934d30d5ea77830f5d2a69e0c32cc"
 
 [[package]]
 name = "asttokens"
