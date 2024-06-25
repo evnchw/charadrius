@@ -18,7 +18,7 @@ version = "0.1.0"
 description = "A template Poetry project structure."
 
 packages = [
-    { include = "charadrius", from = "src" },
+    { include = "charadrius" },
 ]
 
 authors = ["Evan Chow <echow@alumni.princeton.edu>",]
