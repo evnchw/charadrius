@@ -51,11 +51,15 @@ classifiers = [
 
 
 [tool.poetry.dependencies]
-python=">=3.10,<3.12"
+python=">=3.10,<3.11"
 ipykernel = "^6.29.4"
 # poetry add git+ssh://git@github.com/evnchw/aspidoceleon.git#v1.0
 aspidoceleon = {git = "ssh://git@github.com/evnchw/aspidoceleon.git", rev = "v1.0.1"}
 jupyterlab-rise = "^0.42.0"
+quantstats = "^0.0.62"
+stochastic = "^0.7.0"
+loguru = "^0.7.2"
+tqdm = "^4.66.5"
 
 
 [tool.poetry.group.dev.dependencies]
